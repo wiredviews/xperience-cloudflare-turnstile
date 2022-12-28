@@ -1,0 +1,70 @@
+@using CMS.Helpers
+@using XperienceCommunity.Cloudflare.Turnstile.Components.FormComponents
+@using Kentico.Forms.Web.Mvc
+@using Kentico.Web.Mvc
+
+@model TurnstileFormComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+    var safeComponentId = Html.IdFor(x => x.Value).ToString().Replace("-", "_");
+    var renderFunctionName = "renderTurnstile" + safeComponentId;
+    var turnstileDivId = "turnstile-" + Html.IdFor(x => x.Value);
+}
+
+@if (Model.IsConfigured)
+{
+    <script>
+        (function () {
+            'use strict';
+
+            function renderTurnstile() {
+                window.turnstile.render('@turnstileDivId', {
+                    'sitekey': '@Model.PublicKey',
+                    'theme': '@Model.Properties.Theme',
+                    'size': '@Model.Properties.WidgetSize',
+                });
+            }
+
+            if (window.turnstileScriptStatus === 'LOADED') {
+                renderTurnstile();
+
+                return;
+            }
+
+            window.turnstileToLoad = window.turnstileToLoad || [];
+
+            if (window.turnstileScriptStatus === 'LOADING') {
+                window.turnstileToLoad.push(renderTurnstile);
+
+                return;
+            }
+
+            if (window.turnstileScriptStatus !== 'LOADING' && window.turnstileScriptStatus !== 'LOADED') {
+                window.turnstileScriptStatus = 'LOADING';
+                window.turnstileToLoad.push(renderTurnstile);
+                var script = document.createElement("script");
+                script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+                script.addEventListener('load', function (e) {
+                    window.turnstileScriptStatus = 'LOADED';
+                    for (var i = 0; i < window.turnstileToLoad.length; i++) {
+                        window.turnstileToLoad[i]();
+                    }
+                });
+
+                document.head.appendChild(script);
+
+                return;
+            }
+        })();
+    </script>
+
+    @Html.HiddenFor(m => m.Value, htmlAttributes)
+    <div id="@turnstileDivId"></div>
+}
+else
+{
+    <div class="ktc-form-builder-mvc-invalid-component">
+        <span>@ResHelper.GetString("xperiencecommunity.formbuilder.component.cloudflare.turnstile.error.invalidconfiguration")</span>
+    </div>
+}
