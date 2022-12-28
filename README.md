@@ -4,6 +4,10 @@
 
 [![Publish Packages to NuGet](https://github.com/wiredviews/xperience-cloudflare-turnstile/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/wiredviews/xperience-cloudflare-turnstile/actions/workflows/publish.yml)
 
+Cloudflare Turnstile is a privacy-preserving alternative to traditional captchas that can be used independently of any of Cloudflare's other products and services. Xperience Cloudflare Turnstile integrates Turnstile's visitor validation into Kentico Xperience 13.0 Form Builder forms.
+
+> You can take advantage of Turnstile and stop bothering your visitors with a CAPTCHA even without being on the Cloudflare network. While we make it as easy as possible to use our network, we don't want this to be a barrier to improving privacy and user experience. - [source](https://blog.cloudflare.com/turnstile-private-captcha-alternative/)
+
 ## Packages
 
 ### XperienceCommunity.Cloudflare.Turnstile
@@ -74,10 +78,16 @@ If you would like contribute to the code or documentation, please [open a pull r
 
 ## References
 
+### Cloudflare Turnstile
+
 - [Cloudflare Turnstile](https://blog.cloudflare.com/turnstile-private-captcha-alternative/)
 - [Turnstile Server Configuration](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)
 - [Turnstile Client Configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/)
 - [Cloudflare Dashboard](https://dash.cloudflare.com/)
+
+### Related
+
+- [Xperience hCaptcha](https://github.com/wiredviews/xperience-hcaptcha)
 
 ### Kentico Xperience
 
